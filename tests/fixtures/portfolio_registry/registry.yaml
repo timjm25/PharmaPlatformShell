@@ -1,0 +1,11 @@
+# Test fixture: a trimmed copy of timjm25/portfolio-agent registry/registry.yaml
+# (commit 40702a863c1fff682221b0eee5004328e416b521), same shape.
+total_services: 3
+agents:
+  qa-compliance:
+    - deviation-management  # canonical timjm25/QInvestigationAgent, gxp=true, mode=api_service
+  shared-tool:
+    - gxp-audit-platform  # canonical timjm25/AuditTrailService, gxp=true, mode=api_service
+    - ml-ops-monitoring  # canonical timjm25/AIAgentFleetMonitor, gxp=false, mode=api_service
+standalone:
+  - timjm25/vasculogic-core  # no agent; independent

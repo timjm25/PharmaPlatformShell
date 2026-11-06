@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv/
+venv/
+.env
+*.db
+*.sqlite3
+data/
+*.jsonl
+*.jsonl.delivered

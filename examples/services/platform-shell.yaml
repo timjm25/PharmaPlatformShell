@@ -1,0 +1,19 @@
+# EXAMPLE descriptor for local development. portfolio-agent agent.yaml format plus a
+# "runtime" block read by PharmaPlatformShell (base_url, health_path, scopes, routes).
+capability: platform-shell
+canonical_repo: timjm25/PharmaPlatformShell
+agent: shared-tool
+gxp: true
+invocation:
+  mode: api_service
+  entrypoint: platform_shell.gateway:create_app
+  openapi: /openapi.json
+entities:
+  reads: [User, ServiceDescriptor]
+  writes: [User, ServiceDescriptor, ESignature, AuditEvent]
+depends_on: [gxp-audit-platform]
+skill: null
+runtime:
+  base_url: http://localhost:5100
+  health_path: /healthz
+  proxy: false   # the gateway itself; listed for discovery, never proxied to

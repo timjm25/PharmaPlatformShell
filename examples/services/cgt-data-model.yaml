@@ -1,0 +1,22 @@
+# EXAMPLE descriptor for local development. portfolio-agent agent.yaml format plus a
+# "runtime" block read by PharmaPlatformShell (base_url, health_path, scopes, routes).
+# Existing service: timjm25/CGTDataModel. portfolio-agent calls this capability
+# cdmo-semantic-layer; that name is kept as an alias so both resolve.
+capability: cgt-data-model
+aliases: [cdmo-semantic-layer]
+canonical_repo: timjm25/CGTDataModel
+agent: shared-tool
+gxp: true
+invocation:
+  mode: api_service
+  entrypoint: cgtdatamodel.app:create_app
+  openapi: /openapi.json
+entities:
+  reads: []
+  writes: [Organization, Contact, Deal, Program, Batch, Lot, Deviation]
+depends_on: [gxp-audit-platform]
+skill: null
+runtime:
+  base_url: http://localhost:5053
+  health_path: /healthz
+  scopes: {read: "cgt:read", write: "cgt:write"}

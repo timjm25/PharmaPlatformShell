@@ -1,0 +1,19 @@
+# EXAMPLE descriptor for local development. portfolio-agent agent.yaml format plus a
+# "runtime" block read by PharmaPlatformShell (base_url, health_path, scopes, routes).
+capability: pharma-event-bus
+canonical_repo: timjm25/PharmaEventBus
+agent: shared-tool
+gxp: true
+invocation:
+  mode: api_service
+  entrypoint: pharma_bus.app:create_app
+  openapi: /openapi.json
+entities:
+  reads: [MessageEnvelope]
+  writes: [MessageEnvelope]
+depends_on: [platform-shell, gxp-audit-platform, asset-registry]
+skill: null
+runtime:
+  base_url: http://localhost:5102
+  health_path: /healthz
+  scopes: {read: "bus:read", write: "bus:publish"}

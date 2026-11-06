@@ -1,0 +1,19 @@
+# Agent-capability descriptor (portfolio-agent scaffold format) for PharmaPlatformShell.
+capability: platform-shell
+canonical_repo: timjm25/PharmaPlatformShell
+agent: shared-tool
+gxp: true
+
+invocation:
+  mode: api_service
+  entrypoint: platform_shell.gateway:create_app
+  openapi: /openapi.json
+
+entities:
+  reads: [User, ServiceDescriptor]
+  writes: [User, ServiceDescriptor, ESignature, AuditEvent]
+
+skill: null
+
+depends_on:
+  - gxp-audit-platform

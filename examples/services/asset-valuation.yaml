@@ -1,0 +1,23 @@
+# EXAMPLE descriptor for local development. portfolio-agent agent.yaml format plus a
+# "runtime" block read by PharmaPlatformShell (base_url, health_path, scopes, routes).
+capability: asset-valuation
+canonical_repo: timjm25/AssetValuationDataRoom
+agent: commercial-bd
+gxp: false
+invocation:
+  mode: api_service
+  entrypoint: valuation_room.app:create_app
+  openapi: /openapi.json
+entities:
+  reads: [Asset, ValuationSnapshot, DealTerms]
+  writes: [ValuationSnapshot, DataRoomDocument]
+depends_on: [platform-shell, gxp-audit-platform, asset-registry]
+skill: null
+runtime:
+  base_url: http://localhost:5104
+  health_path: /healthz
+  scopes: {read: "valuation:read", write: "valuation:write"}
+  routes:
+    # Partners see the data room and nothing else.
+    - {methods: [GET, HEAD], path_prefix: /dataroom, scope: "dataroom:read"}
+    - {methods: [POST, PUT, PATCH, DELETE], path_prefix: /dataroom, scope: "dataroom:write"}

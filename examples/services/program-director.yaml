@@ -1,0 +1,22 @@
+# EXAMPLE descriptor for local development. portfolio-agent agent.yaml format plus a
+# "runtime" block read by PharmaPlatformShell (base_url, health_path, scopes, routes).
+capability: program-director
+canonical_repo: timjm25/ProgramDirectorAgent
+agent: shared-tool
+gxp: true
+invocation:
+  mode: api_service
+  entrypoint: program_director.app:create_app
+  openapi: /openapi.json
+entities:
+  reads: [Asset, StudyReport, AssayResult, ValuationSnapshot]
+  writes: [StageGateDecision]
+depends_on: [platform-shell, gxp-audit-platform, asset-registry, pharma-event-bus]
+skill: null
+runtime:
+  base_url: http://localhost:5103
+  health_path: /healthz
+  scopes: {read: "gates:read", write: "gates:write"}
+  routes:
+    # Recording a gate decision carries e-signatures: only signers may call it.
+    - {methods: [POST], path_prefix: /gates, scope: "gates:sign"}

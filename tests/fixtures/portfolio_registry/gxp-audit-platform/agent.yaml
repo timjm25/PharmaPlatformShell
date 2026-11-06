@@ -1,0 +1,34 @@
+# Test fixture: copy of timjm25/portfolio-agent registry/gxp-audit-platform/agent.yaml
+# (commit 40702a863c1fff682221b0eee5004328e416b521).
+capability: gxp-audit-platform
+canonical_repo: timjm25/AuditTrailService
+canonical_readiness_pct: 93
+agent: shared-tool
+gxp: true
+note: >-
+  Hash-chained append-only audit trail + e-signature + RBAC. Root dependency for all GxP services.
+
+invocation:
+  mode: api_service
+  entrypoint: app.main:app
+  openapi: /openapi.json
+
+entities:
+  reads: []
+  writes: ["AuditEvent", "ESignature"]
+
+depends_on: []
+
+skill: null
+
+rollup:
+  member_count: 6
+  annual_value_total: 315000
+
+folds_in:
+    - repo: timjm25/GxPAIGovernance
+      readiness_pct: 63
+      annual_value: 60000
+    - repo: timjm25/DataAccessAnomalyMonitor
+      readiness_pct: 83
+      annual_value: 30000

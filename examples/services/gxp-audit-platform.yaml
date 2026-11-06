@@ -1,0 +1,20 @@
+# EXAMPLE descriptor for local development. portfolio-agent agent.yaml format plus a
+# "runtime" block read by PharmaPlatformShell (base_url, health_path, scopes, routes).
+# Existing service: timjm25/AuditTrailService (portfolio-agent registry/gxp-audit-platform).
+capability: gxp-audit-platform
+canonical_repo: timjm25/AuditTrailService
+agent: shared-tool
+gxp: true
+invocation:
+  mode: api_service
+  entrypoint: audittrail.app:create_app
+  openapi: null    # AuditTrailService serves HTML, no OpenAPI yet
+entities:
+  reads: []
+  writes: [AuditEvent, ESignature]
+depends_on: []
+skill: null
+runtime:
+  base_url: http://localhost:5056
+  health_path: /healthz
+  scopes: {read: "audit:read", write: "audit:write"}

@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cdmo-agent-contracts:Common:1.0.0",
+  "title": "Common definitions",
+  "description": "Shared $defs referenced by every CDMO agent contract.",
+  "x-contract-version": "1.0.0",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}$",
+      "description": "Business identifier: letters, digits and . _ : / - (max 128)."
+    },
+    "agentId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+      "description": "Agent / project identifier, e.g. 'P32' or 'release-agent'."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 date-time with offset, e.g. 2026-11-05T14:30:00Z."
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 calendar date, YYYY-MM-DD."
+    },
+    "nonEmptyText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
+    },
+    "quantity": {
+      "type": "object",
+      "required": [
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    },
+    "person": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "urn:cdmo-agent-contracts:Common:1.0.0#/$defs/identifier"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "role": {
+          "type": "string",
+          "maxLength": 100
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": [
+        "signer_id",
+        "meaning",
+        "signed_at"
+      ],
+      "properties": {
+        "signer_id": {
+          "$ref": "urn:cdmo-agent-contracts:Common:1.0.0#/$defs/identifier"
+        },
+        "signer_name": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "meaning": {
+          "enum": [
+            "authored",
+            "reviewed",
+            "approved",
+            "verified",
+            "released"
+          ]
+        },
+        "signed_at": {
+          "$ref": "urn:cdmo-agent-contracts:Common:1.0.0#/$defs/timestamp"
+        },
+        "method": {
+          "enum": [
+            "electronic",
+            "wet_ink_scanned"
+          ],
+          "default": "electronic"
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      },
+      "description": "Electronic-signature manifestation (who, meaning, when). The signing itself happens in the validated system of record."
+    },
+    "attachment": {
+      "type": "object",
+      "required": [
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "media_type": {
+          "type": "string",
+          "pattern": "^[a-z]+/[A-Za-z0-9.+-]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    },
+    "modality": {
+      "enum": [
+        "autologous_cell_therapy",
+        "allogeneic_cell_therapy",
+        "gene_therapy_aav",
+        "gene_therapy_lvv",
+        "viral_vector",
+        "plasmid_dna",
+        "mrna",
+        "monoclonal_antibody",
+        "adc",
+        "recombinant_protein",
+        "other"
+      ]
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "1 = highest."
+    }
+  }
+}

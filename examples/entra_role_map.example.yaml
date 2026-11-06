@@ -1,0 +1,13 @@
+# EXAMPLE Entra ID role map (fictional ids). Keys are Entra app-role values (the
+# "roles" claim) or security-group object ids (the "groups" claim); values are
+# platform roles. Point PLATFORM_OIDC_ROLE_MAP at this file.
+role_map:
+  Platform.Admin: admin
+  Program.Director: program_director
+  CMC.Lead: cmc_lead
+  Clinical.Lead: clinical_lead
+  Quality.Assurance: qa
+  Business.Development: bd
+  Finance: finance
+  Platform.Reader: viewer
+  "00000000-0000-0000-0000-00000000e001": partner   # EXAMPLE partner guest group

@@ -1,0 +1,19 @@
+# EXAMPLE descriptor for local development. portfolio-agent agent.yaml format plus a
+# "runtime" block read by PharmaPlatformShell (base_url, health_path, scopes, routes).
+capability: asset-registry
+canonical_repo: timjm25/AssetProgramRegistry
+agent: shared-tool
+gxp: true
+invocation:
+  mode: api_service
+  entrypoint: asset_registry.app:create_app
+  openapi: /openapi.json
+entities:
+  reads: [Asset, Target, Indication, Study, Batch, Submission, Deal, Partner, IPReference]
+  writes: [Asset, Target, Indication, Study, Batch, Submission, Deal, Partner, IPReference]
+depends_on: [platform-shell, gxp-audit-platform]
+skill: null
+runtime:
+  base_url: http://localhost:5101
+  health_path: /healthz
+  scopes: {read: "registry:read", write: "registry:write"}
